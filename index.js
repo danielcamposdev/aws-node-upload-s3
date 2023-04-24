@@ -14,10 +14,9 @@ aws.config.update(awsConfig);
 const s3 = new aws.S3();
 
 const fileName = "04381611144-IRPF-2021-2020-origi-imagem-declaracao.pdf";
-const filePath =
-  "C:\\Users\\Daniel\\Documents\\node-projects\\aws\\04381611144-IRPF-2021-2020-origi-imagem-declaracao.pdf";
+const filePath = "";
 
-const bucketName = "aws-dev1-bucket";
+const bucketName = process.env.S3_BUCKET_NAME;
 const file = fs.readFileSync(filePath);
 
 const parameters = {
