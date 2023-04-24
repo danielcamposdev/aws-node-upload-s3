@@ -9,8 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
-    "aws-sdk": "^2.1363.0",
+    "@aws-sdk/client-s3": "^3.317.0",
     "dotenv": "^16.0.3"
   }
 }

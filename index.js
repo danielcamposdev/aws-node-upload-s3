@@ -1,22 +1,22 @@
-const aws = require("aws-sdk");
-const fs = require("fs");
-require("dotenv").config();
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import dotenv from "dotenv";
+import fs from "fs";
 
-const awsConfig = {
-  accessKeyId: process.env.ACCESS_KEY_ID,
-  secretAccessKey: process.env.SECRET_ACCESS_KEY,
-};
+dotenv.config();
 
-console.log(awsConfig);
+const s3 = new S3Client({ region: process.env.AWS_REGION });
 
-aws.config.update(awsConfig);
+// const awsConfig = {
+//   accessKeyId: process.env.ACCESS_KEY_ID,
+//   secretAccessKey: process.env.SECRET_ACCESS_KEY,
+// };
 
-const s3 = new aws.S3();
-
-const fileName = "04381611144-IRPF-2021-2020-origi-imagem-declaracao.pdf";
+const bucketName = process.env.AWS_S3_BUCKET_NAME;
+const fileName = "";
 const filePath = "";
 
-const bucketName = process.env.S3_BUCKET_NAME;
+// aws.config.update(awsConfig);
+
 const file = fs.readFileSync(filePath);
 
 const parameters = {
@@ -25,11 +25,10 @@ const parameters = {
   Body: file,
 };
 
-s3.upload(parameters, (err, data) => {
-  if (err) {
-    console.log("Erro -> ", err);
-    return;
-  }
+const command = new PutObjectCommand(parameters);
 
-  console.log("Success -> ", data.Location);
-});
+s3.send(command)
+  .then((data) => console.log("Upload realizado com sucesso ", data))
+  .catch((error) =>
+    console.log("Houve um erro ao relizar o upload -> ", error)
+  );
